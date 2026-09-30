@@ -6,7 +6,7 @@ import { CreateTaskRequest, Priority, Task, TaskStatistics, TaskStatus } from '.
 @Injectable({ providedIn: 'root' })
 export class TaskService {
   private readonly http = inject(HttpClient);
-  private readonly apiUrl = 'http://localhost:8080/api/tasks';
+  private apiUrl = 'https://task-planner-api-7v53.onrender.com/api/tasks';
 
   getTasks(search?: string, status?: TaskStatus, priority?: Priority): Observable<Task[]> {
     let params = new HttpParams();
