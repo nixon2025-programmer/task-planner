@@ -1,0 +1,32 @@
+<article class="task-card" [class.is-overdue]="overdue()" [class.compact]="compact()" [attr.aria-busy]="busy()">
+  <div class="topline">
+    <div class="badges">
+      <span class="badge priority" [class]="'badge priority ' + task().priority.toLowerCase()">{{ task().priority }}</span>
+      <span [class]="'badge status ' + task().status.toLowerCase()">{{ statusLabel(task().status) }}</span>
+      @if (overdue()) { <span class="badge overdue">! Overdue</span> }
+    </div>
+    <span class="task-id">#{{ task().id }}</span>
+  </div>
+  <h3>{{ task().title }}</h3>
+  @if (task().description) { <p class="description">{{ task().description }}</p> }
+  <p class="due"><span aria-hidden="true">◷</span> Due {{ task().dueDate | date:'mediumDate':'UTC' }}</p>
+  @if (!compact()) {
+    <dl class="timestamps">
+      <div><dt>Created</dt><dd>{{ task().createdAt | date:'medium':'+0200' }}</dd></div>
+      <div><dt>Last updated</dt><dd>{{ task().updatedAt | date:'medium':'+0200' }}</dd></div>
+    </dl>
+  }
+  <div class="card-actions">
+    @if (compact() && task().status !== 'DONE') {
+      <button type="button" class="secondary" [disabled]="busy()" (click)="statusChange.emit('DONE')">Mark done</button>
+    } @else if (!compact()) {
+      <div class="status-control">
+        <label [for]="'status-' + task().id">Change status</label>
+        <select [id]="'status-' + task().id" [value]="task().status" [disabled]="busy()" (change)="onStatusChange($event)">
+          @for (status of statuses; track status.value) { <option [value]="status.value">{{ status.label }}</option> }
+        </select>
+      </div>
+      <button type="button" class="danger-button" [disabled]="busy()" (click)="remove.emit()">Delete</button>
+    }
+  </div>
+</article>

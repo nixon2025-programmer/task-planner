@@ -1,0 +1,31 @@
+.task-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; display: flex; flex-direction: column; min-width: 0; transition: border-color 150ms ease; }
+.task-card:hover { border-color: #c4c7bf; }
+.task-card.is-overdue { border-left: 3px solid var(--danger); padding-left: 18px; }
+.topline, .badges, .card-actions { display: flex; align-items: center; }
+.topline { justify-content: space-between; gap: 12px; }
+.badges { flex-wrap: wrap; gap: 6px; }
+.badge { border-radius: 6px; padding: 4px 7px; font-size: 0.66rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; background: #f0f1ed; color: #444953; }
+.priority.high { background: var(--danger-background); color: #96301f; }
+.priority.medium { background: var(--warning-background); color: #75540b; }
+.priority.low { background: var(--success-background); color: #17653b; }
+.status.todo { background: #f0f1ed; color: #4e535c; }
+.status.in_progress { background: #edf3fa; color: #315c83; }
+.status.done { background: var(--success-background); color: #17653b; }
+.overdue { background: var(--danger-background); color: var(--danger); }
+.task-id { color: var(--text-subtle); font-size: 0.74rem; font-variant-numeric: tabular-nums; }
+h3 { color: var(--text-primary); font-size: 1.08rem; font-weight: 800; line-height: 1.3; letter-spacing: -0.015em; margin: 16px 0 6px; overflow-wrap: anywhere; }
+.description { color: var(--text-secondary); font-size: 0.9rem; line-height: 1.55; margin: 0 0 16px; white-space: pre-wrap; overflow-wrap: anywhere; }
+.due { color: var(--text-primary); font-size: 0.84rem; font-weight: 700; margin: auto 0 16px; padding-top: 2px; }
+.timestamps { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 14px 0; margin: 0; border-top: 1px solid var(--border-light); }
+.timestamps div { min-width: 0; }
+.timestamps dt { color: var(--text-subtle); font-size: 0.66rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }
+.timestamps dd { color: var(--text-secondary); font-size: 0.77rem; margin: 3px 0 0; }
+.card-actions { justify-content: space-between; gap: 12px; border-top: 1px solid var(--border-light); padding-top: 14px; margin-top: 2px; }
+.status-control { display: flex; align-items: center; gap: 8px; }
+.status-control label { font-size: 0.76rem; font-weight: 600; color: var(--text-secondary); }
+.status-control select { min-height: 38px; padding: 7px 32px 7px 10px; font-size: 0.8rem; }
+.compact { box-shadow: none; }
+.compact h3 { margin-top: 14px; }
+.compact .description { display: none; }
+.compact .card-actions { justify-content: flex-end; }
+@media (max-width: 430px) { .task-card { padding: 16px; } .task-card.is-overdue { padding-left: 14px; } .timestamps { grid-template-columns: 1fr; } .card-actions { align-items: stretch; flex-direction: column; } .status-control { justify-content: space-between; } .status-control select { flex: 1; } .danger-button { width: 100%; } }

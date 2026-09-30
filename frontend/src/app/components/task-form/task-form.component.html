@@ -1,0 +1,31 @@
+<section class="panel" aria-labelledby="create-title">
+  <div class="section-heading"><div><p class="eyebrow">Quick add</p><h2 id="create-title">Create task</h2></div><span class="required-note">* Required</span></div>
+  <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+    <div class="field title-field">
+      <label for="task-title">Title <span aria-hidden="true">*</span></label>
+      <input id="task-title" type="text" formControlName="title" maxlength="160" placeholder="What needs to be done?" [attr.aria-invalid]="isInvalid('title')" aria-describedby="title-error">
+      @if (isInvalid('title')) { <p id="title-error" class="field-error">Task title is required.</p> }
+    </div>
+    <div class="field description-field">
+      <label for="task-description">Description</label>
+      <textarea id="task-description" formControlName="description" rows="3" placeholder="Add useful context or notes"></textarea>
+    </div>
+    <div class="field">
+      <label for="task-due-date">Due date <span aria-hidden="true">*</span></label>
+      <input id="task-due-date" type="date" formControlName="dueDate" [attr.aria-invalid]="isInvalid('dueDate')" aria-describedby="date-help date-error">
+      <span id="date-help" class="hint">Past dates are allowed.</span>
+      @if (isInvalid('dueDate')) { <p id="date-error" class="field-error">Due date is required.</p> }
+    </div>
+    <div class="field">
+      <label for="task-priority">Priority <span aria-hidden="true">*</span></label>
+      <select id="task-priority" formControlName="priority" [attr.aria-invalid]="isInvalid('priority')">
+        @for (priority of priorities; track priority.value) { <option [value]="priority.value">{{ priority.label }}</option> }
+      </select>
+      @if (isInvalid('priority')) { <p class="field-error">Please select a valid priority.</p> }
+    </div>
+    <div class="actions">
+      @if (serverError) { <p class="submit-error" role="alert">{{ serverError }}</p> }
+      <button class="primary" type="submit" [disabled]="submitting">{{ submitting ? 'Creating…' : '+ Add task' }}</button>
+    </div>
+  </form>
+</section>

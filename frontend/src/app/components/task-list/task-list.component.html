@@ -1,0 +1,13 @@
+@if (loading()) {
+  <div class="state" role="status"><span class="spinner" aria-hidden="true"></span><p>Loading tasks…</p></div>
+} @else if (!tasks().length) {
+  <div class="state empty"><span class="empty-icon" aria-hidden="true">✓</span>
+    <p>{{ filtered() ? 'No tasks match your current search or filters.' : 'No tasks yet. Create your first task to get started.' }}</p>
+  </div>
+} @else {
+  <div class="task-grid">
+    @for (task of tasks(); track task.id) {
+      <app-task-card [task]="task" [busy]="busyTaskId() === task.id" [overdue]="task.id !== undefined && overdueIds().has(task.id)" (statusChange)="statusChange.emit({ task, status: $event })" (remove)="remove.emit(task)" />
+    }
+  </div>
+}

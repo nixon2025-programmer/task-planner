@@ -1,0 +1,8 @@
+.task-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.state { min-height: 180px; display: grid; place-content: center; justify-items: center; color: var(--text-secondary); text-align: center; border: 1px dashed var(--border); border-radius: var(--radius); background: var(--surface); padding: 32px; }
+.state p { max-width: 420px; margin: 12px 0 0; }
+.spinner { width: 24px; height: 24px; border: 3px solid var(--border); border-top-color: var(--primary); border-radius: 50%; animation: spin 0.7s linear infinite; }
+.empty-icon { display: grid; place-content: center; width: 40px; height: 40px; border-radius: 50%; background: var(--success-background); color: var(--primary); font-size: 1.15rem; font-weight: 800; }
+@keyframes spin { to { transform: rotate(360deg); } }
+@media (max-width: 850px) { .task-grid { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { .spinner { animation: none; } }

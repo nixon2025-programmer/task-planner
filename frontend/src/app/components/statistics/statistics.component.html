@@ -1,0 +1,7 @@
+<section class="stats" aria-label="Task statistics" [attr.aria-busy]="loading()">
+  <article class="stat"><span class="value">{{ statistics().total }}</span><span class="label">Total tasks</span></article>
+  <article class="stat"><span class="value">{{ statistics().todo }}</span><span class="label">To do</span></article>
+  <article class="stat"><span class="value">{{ statistics().inProgress }}</span><span class="label">In progress</span></article>
+  <article class="stat"><span class="value">{{ statistics().done }}</span><span class="label">Done</span></article>
+  <article class="stat alert"><span class="value">{{ statistics().overdue }}</span><span class="label">Overdue</span></article>
+</section>

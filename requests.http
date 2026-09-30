@@ -1,0 +1,69 @@
+### Get all tasks
+GET http://localhost:8080/api/tasks
+
+
+### Create future task
+POST http://localhost:8080/api/tasks
+Content-Type: application/json
+
+{
+  "title": "Complete Task Planner",
+  "description": "Finish the Kenac Software Engineering assessment",
+  "dueDate": "2026-10-01",
+  "priority": "HIGH",
+  "status": "TODO"
+}
+
+
+### Create overdue task
+POST http://localhost:8080/api/tasks
+Content-Type: application/json
+
+{
+  "title": "Old Report",
+  "description": "Past due acceptance test task",
+  "dueDate": "2026-09-20",
+  "priority": "LOW",
+  "status": "TODO"
+}
+
+
+### Search by title
+GET http://localhost:8080/api/tasks?search=Planner
+
+
+### Filter by HIGH priority
+GET http://localhost:8080/api/tasks?priority=HIGH
+
+
+### Filter by TODO status
+GET http://localhost:8080/api/tasks?status=TODO
+
+
+### Combined filters
+GET http://localhost:8080/api/tasks?status=TODO&priority=HIGH
+
+
+### Get overdue tasks
+GET http://localhost:8080/api/tasks/overdue
+
+
+### Get statistics
+GET http://localhost:8080/api/tasks/statistics
+
+
+### Mark task ID 2 as DONE
+PATCH http://localhost:8080/api/tasks/2/status
+Content-Type: application/json
+
+{
+  "status": "DONE"
+}
+
+
+### Get overdue tasks after marking task Done
+GET http://localhost:8080/api/tasks/overdue
+
+
+### Statistics after marking task Done
+GET http://localhost:8080/api/tasks/statistics

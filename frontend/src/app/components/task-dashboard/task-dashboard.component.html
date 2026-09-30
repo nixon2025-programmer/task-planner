@@ -1,0 +1,50 @@
+<header class="app-header">
+  <div class="header-inner">
+    <div class="brand"><span class="brand-mark" aria-hidden="true">✓</span><div><p>Task Planner</p><span>Personal productivity dashboard</span></div></div>
+    <p class="timezone"><span aria-hidden="true">◷</span> Timezone: Africa/Harare</p>
+  </div>
+</header>
+
+<main class="dashboard">
+  <section class="welcome" aria-labelledby="page-title">
+    <div><p class="eyebrow">Your workspace</p><h1 id="page-title">Organise what matters.</h1><p>See what needs attention next and keep every task moving forward.</p></div>
+    <button type="button" class="refresh" (click)="refreshAll()" [disabled]="refreshing"><span aria-hidden="true">↻</span> {{ refreshing ? 'Refreshing…' : 'Refresh' }}</button>
+  </section>
+
+  @if (errorMessage) {
+    <div class="error-banner" role="alert"><span>{{ errorMessage }}</span><button type="button" (click)="refreshAll()">Try again</button></div>
+  }
+
+  <app-statistics [statistics]="statistics" [loading]="refreshing" />
+
+  <div class="workspace-grid">
+    <app-task-form (created)="refreshAll()" />
+    <section class="attention panel" aria-labelledby="attention-title">
+      <div class="section-heading"><div><p class="eyebrow danger-text">Priority view</p><h2 id="attention-title">Needs attention</h2></div><span class="count">{{ overdueTasks.length }} overdue</span></div>
+      @if (refreshing && !overdueTasks.length) {
+        <p class="attention-state" role="status">Checking overdue tasks…</p>
+      } @else if (!overdueTasks.length) {
+        <div class="all-clear"><span aria-hidden="true">✓</span><div><strong>All clear</strong><p>No overdue tasks.</p></div></div>
+      } @else {
+        <div class="attention-list">
+          @for (task of overdueTasks; track task.id) {
+            <app-task-card [task]="task" [compact]="true" [overdue]="true" [busy]="busyTaskId === task.id" (statusChange)="updateStatus(task, $event)" />
+          }
+        </div>
+      }
+    </section>
+  </div>
+
+  <section class="tasks-panel panel" aria-labelledby="tasks-title">
+    <div class="section-heading task-heading"><div><p class="eyebrow">Plan and progress</p><h2 id="tasks-title">Your tasks</h2></div><span class="results">{{ tasks.length }} {{ tasks.length === 1 ? 'result' : 'results' }}</span></div>
+    <div class="filters" aria-label="Search and filter tasks">
+      <div class="search-wrap"><label class="sr-only" for="task-search">Search tasks by title</label><span aria-hidden="true">⌕</span><input id="task-search" type="search" [formControl]="searchControl" placeholder="Search tasks by title..."></div>
+      <div><label class="sr-only" for="status-filter">Filter by status</label><select id="status-filter" [value]="statusFilter" (change)="onStatusFilter($event)"><option value="">All statuses</option><option value="TODO">To do</option><option value="IN_PROGRESS">In progress</option><option value="DONE">Done</option></select></div>
+      <div><label class="sr-only" for="priority-filter">Filter by priority</label><select id="priority-filter" [value]="priorityFilter" (change)="onPriorityFilter($event)"><option value="">All priorities</option><option value="LOW">Low</option><option value="MEDIUM">Medium</option><option value="HIGH">High</option></select></div>
+      <button type="button" class="clear" (click)="clearFilters()" [disabled]="!hasFilters">Clear filters</button>
+    </div>
+    <app-task-list [tasks]="tasks" [loading]="loading" [filtered]="hasFilters" [busyTaskId]="busyTaskId" [overdueIds]="overdueIds" (statusChange)="updateStatus($event.task, $event.status)" (remove)="deleteTask($event)" />
+  </section>
+</main>
+
+<footer><p>Task Planner · Times shown for Africa/Harare (UTC+02:00)</p></footer>
